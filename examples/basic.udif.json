@@ -1,19 +1,59 @@
 {
   "udif": "2.0",
+  "meta": {
+    "source": "self-authored",
+    "session_id": "sess_basic_001",
+    "timestamp": "2026-03-01T00:00:00Z",
+    "consent_granted": true,
+    "consent_type": "explicit",
+    "data_type": "preferences"
+  },
   "identity": {
-    "id": "example-user-001",
-    "display_name": "Example User"
+    "alias": "example-user",
+    "persona_tags": ["creator", "builder"],
+    "archetype": "visionary",
+    "language": "en-US",
+    "timezone": "America/New_York"
   },
   "context": {
-    "preferences": {
-      "communication_style": "direct",
-      "topics_of_interest": ["data sovereignty", "AI", "technology policy"],
-      "values": ["privacy", "ownership", "transparency"]
-    }
+    "device": {
+      "type": "desktop",
+      "os": "macOS"
+    },
+    "emotional_state": ["focused", "intentional"],
+    "presence_level": "high",
+    "energy_score": 8
+  },
+  "platform": {
+    "name": "Custom",
+    "data_format": "json",
+    "source_type": "file",
+    "export_date": "2026-03-01T00:00:00Z"
+  },
+  "data_event": {
+    "type": "preference_capture",
+    "service": "self",
+    "tags": ["data sovereignty", "AI", "technology"],
+    "content_title": "Basic user preferences",
+    "is_shareable": false
+  },
+  "values": {
+    "data_use_permissions": ["self-analytics", "personal AI context"],
+    "sharing_boundaries": ["only on explicit consent"],
+    "preferred_exchanges": ["insight", "access"],
+    "core_values": ["privacy", "ownership", "transparency"]
+  },
+  "frequency": {
+    "intended_impact": "informing",
+    "creative_source": "self",
+    "self_expression_level": "medium",
+    "authenticity_score": 9,
+    "energetic_signature": "hash_placeholder"
   },
   "provenance": {
     "created_at": "2026-03-01T00:00:00Z",
     "source": "self-authored",
-    "hash": "placeholder-sha256-hash"
+    "hash": "placeholder-sha256-hash",
+    "chain": []
   }
 }
