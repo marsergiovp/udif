@@ -1,34 +1,83 @@
 {
   "udif": "2.0",
+  "meta": {
+    "source": "ChatGPT",
+    "generator": "gpt-4-turbo",
+    "session_id": "sess_openai_example_001",
+    "timestamp": "2026-03-01T14:00:00Z",
+    "user_id": "user_example_001",
+    "consent_granted": true,
+    "consent_type": "explicit",
+    "data_type": "chat_history"
+  },
   "identity": {
-    "id": "example-user-001",
-    "display_name": "Example User"
+    "alias": "example-user",
+    "persona_tags": ["strategist", "creator", "builder"],
+    "archetype": "visionary",
+    "language": "en-US",
+    "timezone": "America/New_York"
   },
   "context": {
-    "ai_interactions": {
-      "summary": "User works in technology and data policy. Prefers concise, direct responses. Has deep knowledge of data portability, open standards, and AI infrastructure.",
-      "preferences": {
-        "response_style": "direct and concise",
-        "expertise_level": "expert",
-        "preferred_format": "prose over bullet points"
-      },
-      "recurring_topics": [
-        "data sovereignty",
-        "open standards",
-        "AI memory portability",
-        "creator ownership"
-      ]
+    "device": {
+      "type": "desktop",
+      "os": "macOS"
     },
-    "creative_output": {
-      "writing_style": "authoritative, first-person, thesis-driven",
-      "published_works": [],
-      "intellectual_frameworks": ["data sovereignty", "digital ownership"]
-    }
+    "emotional_state": ["curious", "focused"],
+    "presence_level": "high",
+    "energy_score": 8
+  },
+  "platform": {
+    "name": "OpenAI",
+    "data_format": "json",
+    "source_type": "chat_log",
+    "raw_schema_reference": "https://platform.openai.com/docs/api-reference",
+    "export_date": "2026-03-01T08:00:00Z",
+    "session_reference_id": "chatcmpl-example001"
+  },
+  "data_event": {
+    "type": "chat_interaction",
+    "service": "ChatGPT",
+    "tags": ["data sovereignty", "AI portability", "digital ownership"],
+    "content_title": "Discussion on AI data portability",
+    "duration": 540,
+    "value_perceived": 9,
+    "is_shareable": false,
+    "messages": [
+      {
+        "role": "user",
+        "content": "What does real data portability look like for AI context?",
+        "timestamp": "2026-03-01T14:00:00Z"
+      },
+      {
+        "role": "assistant",
+        "content": "Real portability means a file you own, in a format any system can read, stored on infrastructure you control.",
+        "timestamp": "2026-03-01T14:00:03Z"
+      }
+    ]
+  },
+  "values": {
+    "data_use_permissions": ["self-analytics", "personal AI context"],
+    "sharing_boundaries": ["only on explicit consent"],
+    "preferred_exchanges": ["insight", "access"],
+    "core_values": ["sovereignty", "transparency", "ownership"]
+  },
+  "frequency": {
+    "intended_impact": "informing",
+    "creative_source": "collaborative",
+    "self_expression_level": "high",
+    "authenticity_score": 9,
+    "energetic_signature": "hash_placeholder"
   },
   "provenance": {
-    "created_at": "2026-03-01T00:00:00Z",
-    "source": "self-authored",
-    "version": "2.0",
-    "hash": "placeholder-sha256-hash"
+    "created_at": "2026-03-01T14:00:00Z",
+    "source": "ChatGPT",
+    "hash": "placeholder-sha256-hash",
+    "chain": [
+      {
+        "platform": "ChatGPT",
+        "exported_at": "2026-03-01T08:00:00Z",
+        "hash": "placeholder-export-hash"
+      }
+    ]
   }
 }
