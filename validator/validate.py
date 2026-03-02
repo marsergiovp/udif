@@ -155,7 +155,7 @@ def validate_file(filepath, schema=None):
 
     # Provenance hash verification
     provenance = doc.get("provenance", {})
-    if provenance.get("hash") and data_event:
+    if provenance.get("hash") and "data_event" in doc:
         expected_hash = sha256_hash(data_event)
         actual_hash = provenance["hash"]
 
@@ -185,12 +185,14 @@ def validate_file(filepath, schema=None):
                 result["warnings"].append(
                     f"frequency.authenticity_score should be 1-10, got {score}"
                 )
-        if "energy_score" in doc.get("context", {}):
-            score = doc["context"]["energy_score"]
-            if not isinstance(score, int) or score < 1 or score > 10:
-                result["warnings"].append(
-                    f"context.energy_score should be 1-10, got {score}"
-                )
+
+    # Context energy_score check (independent of frequency)
+    if "energy_score" in doc.get("context", {}):
+        score = doc["context"]["energy_score"]
+        if not isinstance(score, int) or score < 1 or score > 10:
+            result["warnings"].append(
+                f"context.energy_score should be 1-10, got {score}"
+            )
 
     return result
 
@@ -198,7 +200,7 @@ def validate_file(filepath, schema=None):
 def print_result(result):
     """Pretty-print a validation result."""
     filename = os.path.basename(result["filepath"])
-    status = "✓ VALID" if result["valid"] else "✗ INVALID"
+    status = "VALID" if result["valid"] else "INVALID"
 
     print(f"\n{status}  {filename}")
 

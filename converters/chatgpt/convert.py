@@ -26,6 +26,11 @@ import os
 from datetime import datetime, timezone
 
 
+def _format_utc(dt):
+    """Format a datetime as ISO 8601 with Z suffix."""
+    return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def sha256_hash(obj):
     """Generate SHA-256 hash of a JSON-serializable object."""
     return hashlib.sha256(
@@ -64,9 +69,9 @@ def extract_messages_from_tree(conversation):
                 if text_parts:
                     create_time = message.get("create_time")
                     timestamp = (
-                        datetime.fromtimestamp(create_time, tz=timezone.utc).isoformat()
+                        _format_utc(datetime.fromtimestamp(create_time, tz=timezone.utc))
                         if create_time
-                        else datetime.now(timezone.utc).isoformat()
+                        else _format_utc(datetime.now(timezone.utc))
                     )
                     messages.append({
                         "role": author_role,
@@ -87,12 +92,12 @@ def convert_conversation(conversation):
     update_time = conversation.get("update_time")
 
     created_at = (
-        datetime.fromtimestamp(create_time, tz=timezone.utc).isoformat()
+        _format_utc(datetime.fromtimestamp(create_time, tz=timezone.utc))
         if create_time
-        else datetime.now(timezone.utc).isoformat()
+        else _format_utc(datetime.now(timezone.utc))
     )
     updated_at = (
-        datetime.fromtimestamp(update_time, tz=timezone.utc).isoformat()
+        _format_utc(datetime.fromtimestamp(update_time, tz=timezone.utc))
         if update_time
         else created_at
     )
@@ -113,6 +118,8 @@ def convert_conversation(conversation):
     if not messages:
         return None
 
+    now = _format_utc(datetime.now(timezone.utc))
+
     # Build the data_event
     data_event = {
         "type": "chat_interaction",
@@ -122,6 +129,8 @@ def convert_conversation(conversation):
         "is_shareable": False,
         "messages": messages
     }
+
+    event_hash = sha256_hash(data_event)
 
     # Build the full UDIF document
     udif_doc = {
@@ -139,7 +148,7 @@ def convert_conversation(conversation):
             "name": "OpenAI",
             "data_format": "json",
             "source_type": "chat_log",
-            "export_date": datetime.now(timezone.utc).isoformat(),
+            "export_date": now,
             "session_reference_id": conversation.get("id", "")
         },
         "data_event": data_event,
@@ -147,12 +156,12 @@ def convert_conversation(conversation):
             "created_at": created_at,
             "updated_at": updated_at,
             "source": "ChatGPT",
-            "hash": sha256_hash(data_event),
+            "hash": event_hash,
             "chain": [
                 {
                     "platform": "ChatGPT",
-                    "exported_at": datetime.now(timezone.utc).isoformat(),
-                    "hash": sha256_hash(data_event)
+                    "exported_at": now,
+                    "hash": event_hash
                 }
             ]
         }

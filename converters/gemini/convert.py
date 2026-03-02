@@ -36,24 +36,31 @@ def sha256_hash(obj):
     ).hexdigest()
 
 
+def _format_utc(dt):
+    """Format a datetime as ISO 8601 with Z suffix."""
+    return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def parse_gemini_timestamp(ts):
     """
     Parse various timestamp formats found in Gemini exports.
     Google Takeout uses multiple formats depending on export version.
+
+    Returns the parsed timestamp string, or None if no timestamp was provided.
     """
     if not ts:
-        return datetime.now(timezone.utc).isoformat()
+        return None
 
     if isinstance(ts, (int, float)):
         # Microseconds since epoch
         if ts > 1e15:
-            return datetime.fromtimestamp(ts / 1e6, tz=timezone.utc).isoformat()
+            return _format_utc(datetime.fromtimestamp(ts / 1e6, tz=timezone.utc))
         # Milliseconds since epoch
         elif ts > 1e12:
-            return datetime.fromtimestamp(ts / 1e3, tz=timezone.utc).isoformat()
+            return _format_utc(datetime.fromtimestamp(ts / 1e3, tz=timezone.utc))
         # Seconds since epoch
         else:
-            return datetime.fromtimestamp(ts, tz=timezone.utc).isoformat()
+            return _format_utc(datetime.fromtimestamp(ts, tz=timezone.utc))
 
     if isinstance(ts, str):
         # Try ISO format first
@@ -68,13 +75,13 @@ def parse_gemini_timestamp(ts):
                 dt = datetime.strptime(ts, fmt)
                 if dt.tzinfo is None:
                     dt = dt.replace(tzinfo=timezone.utc)
-                return dt.isoformat()
+                return _format_utc(dt)
             except ValueError:
                 continue
         # If nothing parses, return as-is
         return ts
 
-    return datetime.now(timezone.utc).isoformat()
+    return None
 
 
 def extract_text_from_parts(parts):
@@ -131,8 +138,8 @@ def extract_messages_from_conversation(conversation):
     )
 
     for turn in turns:
-        # Determine role
-        role_raw = (
+        # Determine role (convert to string first to handle integer values)
+        role_raw = str(
             turn.get("role")
             or turn.get("author")
             or turn.get("sender")
@@ -187,7 +194,7 @@ def extract_messages_from_conversation(conversation):
             or turn.get("timestamp")
             or turn.get("created_at")
         )
-        timestamp = parse_gemini_timestamp(ts)
+        timestamp = parse_gemini_timestamp(ts) or _format_utc(datetime.now(timezone.utc))
 
         messages.append({
             "role": role,
@@ -203,7 +210,7 @@ def extract_messages_from_conversation(conversation):
             model_response = turn.get("modelResponse") or turn.get("response")
 
             ts = turn.get("createTime") or turn.get("timestamp")
-            timestamp = parse_gemini_timestamp(ts)
+            timestamp = parse_gemini_timestamp(ts) or _format_utc(datetime.now(timezone.utc))
 
             if user_input:
                 text = user_input if isinstance(user_input, str) else user_input.get("text", "")
@@ -264,10 +271,10 @@ def convert_conversation(conversation, source_filename=""):
     if not messages:
         return None
 
-    # Use message timestamps as fallback
-    if created_at == datetime.now(timezone.utc).isoformat():
+    # Use message timestamps as fallback when no conversation-level timestamp
+    if created_at is None:
         created_at = messages[0]["timestamp"]
-    if updated_at == datetime.now(timezone.utc).isoformat():
+    if updated_at is None:
         updated_at = messages[-1]["timestamp"]
 
     # Detect model
@@ -275,6 +282,8 @@ def convert_conversation(conversation, source_filename=""):
     model = conversation.get("model") or conversation.get("modelVersion")
     if model:
         generator = model
+
+    now = _format_utc(datetime.now(timezone.utc))
 
     data_event = {
         "type": "chat_interaction",
@@ -284,6 +293,8 @@ def convert_conversation(conversation, source_filename=""):
         "is_shareable": False,
         "messages": messages
     }
+
+    event_hash = sha256_hash(data_event)
 
     udif_doc = {
         "udif": "2.0",
@@ -300,7 +311,7 @@ def convert_conversation(conversation, source_filename=""):
             "name": "Google",
             "data_format": "json",
             "source_type": "chat_log",
-            "export_date": datetime.now(timezone.utc).isoformat(),
+            "export_date": now,
             "session_reference_id": conv_id
         },
         "data_event": data_event,
@@ -308,12 +319,12 @@ def convert_conversation(conversation, source_filename=""):
             "created_at": created_at,
             "updated_at": updated_at,
             "source": "Gemini",
-            "hash": sha256_hash(data_event),
+            "hash": event_hash,
             "chain": [
                 {
                     "platform": "Gemini",
-                    "exported_at": datetime.now(timezone.utc).isoformat(),
-                    "hash": sha256_hash(data_event)
+                    "exported_at": now,
+                    "hash": event_hash
                 }
             ]
         }
@@ -344,10 +355,8 @@ def convert_export(input_path, output_dir):
         json_files = [input_path]
     elif os.path.isdir(input_path):
         # Google Takeout nests under "Gemini Apps/" or "Bard/"
-        json_files = (
-            glob.glob(os.path.join(input_path, "*.json"))
-            + glob.glob(os.path.join(input_path, "**", "*.json"), recursive=True)
-        )
+        # Use recursive glob which also matches root-level files
+        json_files = glob.glob(os.path.join(input_path, "**", "*.json"), recursive=True)
     else:
         print(f"Error: {input_path} is not a valid file or directory.")
         sys.exit(1)

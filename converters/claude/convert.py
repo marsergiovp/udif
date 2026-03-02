@@ -28,6 +28,11 @@ import glob
 from datetime import datetime, timezone
 
 
+def _format_utc(dt):
+    """Format a datetime as ISO 8601 with Z suffix."""
+    return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def sha256_hash(obj):
     """Generate SHA-256 hash of a JSON-serializable object."""
     return hashlib.sha256(
@@ -52,7 +57,13 @@ def extract_messages(chat_messages):
     for msg in chat_messages:
         # Handle different field names across export versions
         role_raw = msg.get("sender") or msg.get("role") or msg.get("author", "")
-        role = "user" if role_raw in ("human", "user") else "assistant"
+        if role_raw in ("human", "user"):
+            role = "user"
+        elif role_raw in ("assistant", "ai"):
+            role = "assistant"
+        else:
+            # Skip unrecognized roles (system, tool, etc.)
+            continue
 
         # Content can be in different fields
         content = (
@@ -80,11 +91,11 @@ def extract_messages(chat_messages):
         if ts:
             # If it's a numeric timestamp, convert it
             if isinstance(ts, (int, float)):
-                timestamp = datetime.fromtimestamp(ts, tz=timezone.utc).isoformat()
+                timestamp = _format_utc(datetime.fromtimestamp(ts, tz=timezone.utc))
             else:
                 timestamp = ts
         else:
-            timestamp = datetime.now(timezone.utc).isoformat()
+            timestamp = _format_utc(datetime.now(timezone.utc))
 
         messages.append({
             "role": role,
@@ -150,6 +161,8 @@ def convert_conversation(conversation_data, source_filename=""):
         if model:
             generator = model
 
+    now = _format_utc(datetime.now(timezone.utc))
+
     data_event = {
         "type": "chat_interaction",
         "service": "Claude",
@@ -158,6 +171,8 @@ def convert_conversation(conversation_data, source_filename=""):
         "is_shareable": False,
         "messages": messages
     }
+
+    event_hash = sha256_hash(data_event)
 
     udif_doc = {
         "udif": "2.0",
@@ -174,7 +189,7 @@ def convert_conversation(conversation_data, source_filename=""):
             "name": "Anthropic",
             "data_format": "json",
             "source_type": "chat_log",
-            "export_date": datetime.now(timezone.utc).isoformat(),
+            "export_date": now,
             "session_reference_id": conv_id
         },
         "data_event": data_event,
@@ -182,12 +197,12 @@ def convert_conversation(conversation_data, source_filename=""):
             "created_at": created_at,
             "updated_at": updated_at,
             "source": "Claude",
-            "hash": sha256_hash(data_event),
+            "hash": event_hash,
             "chain": [
                 {
                     "platform": "Claude",
-                    "exported_at": datetime.now(timezone.utc).isoformat(),
-                    "hash": sha256_hash(data_event)
+                    "exported_at": now,
+                    "hash": event_hash
                 }
             ]
         }
@@ -219,10 +234,8 @@ def convert_export(input_path, output_dir):
         json_files = [input_path]
     elif os.path.isdir(input_path):
         # Look for conversation JSON files in the export directory
-        json_files = (
-            glob.glob(os.path.join(input_path, "*.json"))
-            + glob.glob(os.path.join(input_path, "**", "*.json"), recursive=True)
-        )
+        # Use recursive glob which also matches root-level files
+        json_files = glob.glob(os.path.join(input_path, "**", "*.json"), recursive=True)
     else:
         print(f"Error: {input_path} is not a valid file or directory.")
         sys.exit(1)
